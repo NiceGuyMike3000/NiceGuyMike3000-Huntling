@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34A63C895302DF98156699B8 /* Pods_Huntling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */; };
+		483962372445E6ED002DBFD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 483962362445E6ED002DBFD3 /* GoogleService-Info.plist */; };
 		4853664F243E479C000178DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4853664E243E479C000178DD /* AppDelegate.swift */; };
 		48536651243E479C000178DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48536650243E479C000178DD /* SceneDelegate.swift */; };
 		48536654243E479C000178DD /* Huntling.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48536652243E479C000178DD /* Huntling.xcdatamodeld */; };
@@ -17,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		483962362445E6ED002DBFD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4853664B243E479C000178DD /* Huntling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Huntling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4853664E243E479C000178DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48536650243E479C000178DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,6 +29,9 @@
 		4853665A243E47A1000178DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4853665D243E47A1000178DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4853665F243E47A1000178DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CF3A3C66E18A590D377A74D /* Pods-Huntling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Huntling.release.xcconfig"; path = "Target Support Files/Pods-Huntling/Pods-Huntling.release.xcconfig"; sourceTree = "<group>"; };
+		D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Huntling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8D9743FD96A4C1AB72A68D8 /* Pods-Huntling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Huntling.debug.xcconfig"; path = "Target Support Files/Pods-Huntling/Pods-Huntling.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34A63C895302DF98156699B8 /* Pods_Huntling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +51,8 @@
 			children = (
 				4853664D243E479C000178DD /* Huntling */,
 				4853664C243E479C000178DD /* Products */,
+				DC6CB943C38F2797A22AEB0B /* Pods */,
+				A17201423F59056C72A86646 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -61,6 +70,7 @@
 				4853664E243E479C000178DD /* AppDelegate.swift */,
 				48536650243E479C000178DD /* SceneDelegate.swift */,
 				48536655243E479C000178DD /* ContentView.swift */,
+				483962362445E6ED002DBFD3 /* GoogleService-Info.plist */,
 				48536657243E47A1000178DD /* Assets.xcassets */,
 				4853665C243E47A1000178DD /* LaunchScreen.storyboard */,
 				4853665F243E47A1000178DD /* Info.plist */,
@@ -78,6 +88,23 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		A17201423F59056C72A86646 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC6CB943C38F2797A22AEB0B /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F8D9743FD96A4C1AB72A68D8 /* Pods-Huntling.debug.xcconfig */,
+				8CF3A3C66E18A590D377A74D /* Pods-Huntling.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -85,9 +112,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 48536662243E47A1000178DD /* Build configuration list for PBXNativeTarget "Huntling" */;
 			buildPhases = (
+				D931DD8D07FED1349EF945CB /* [CP] Check Pods Manifest.lock */,
 				48536647243E479C000178DD /* Sources */,
 				48536648243E479C000178DD /* Frameworks */,
 				48536649243E479C000178DD /* Resources */,
+				5530993AF0D04BF39BB16789 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -137,12 +166,55 @@
 			buildActionMask = 2147483647;
 			files = (
 				4853665E243E47A1000178DD /* LaunchScreen.storyboard in Resources */,
+				483962372445E6ED002DBFD3 /* GoogleService-Info.plist in Resources */,
 				4853665B243E47A1000178DD /* Preview Assets.xcassets in Resources */,
 				48536658243E47A1000178DD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5530993AF0D04BF39BB16789 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Huntling/Pods-Huntling-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Huntling/Pods-Huntling-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Huntling/Pods-Huntling-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D931DD8D07FED1349EF945CB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Huntling-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		48536647243E479C000178DD /* Sources */ = {
@@ -286,6 +358,7 @@
 		};
 		48536663243E47A1000178DD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8D9743FD96A4C1AB72A68D8 /* Pods-Huntling.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -306,6 +379,7 @@
 		};
 		48536664243E47A1000178DD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8CF3A3C66E18A590D377A74D /* Pods-Huntling.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
