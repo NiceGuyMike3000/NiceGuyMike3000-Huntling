@@ -31,7 +31,7 @@ struct TrackerListView : View {
                 .padding(.leading, 0)   // this will removes the left spacing (default is 20)
                 .padding(.trailing, 0)  // this will removes the right spacing (default is 20)
                 // set navbar title
-                .navigationBarTitle(Text("Home"))
+                .navigationBarTitle(Text("Nachsucheführer"))
         }
         
     }
