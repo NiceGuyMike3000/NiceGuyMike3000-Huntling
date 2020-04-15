@@ -8,23 +8,25 @@
 
 /* Begin PBXBuildFile section */
 		34A63C895302DF98156699B8 /* Pods_Huntling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */; };
+		480B6FF22446F9F500311836 /* TrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF12446F9F500311836 /* TrackerView.swift */; };
+		480B6FF424472EB300311836 /* TrackerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF324472EB300311836 /* TrackerListView.swift */; };
 		483962372445E6ED002DBFD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 483962362445E6ED002DBFD3 /* GoogleService-Info.plist */; };
 		4853664F243E479C000178DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4853664E243E479C000178DD /* AppDelegate.swift */; };
 		48536651243E479C000178DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48536650243E479C000178DD /* SceneDelegate.swift */; };
 		48536654243E479C000178DD /* Huntling.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 48536652243E479C000178DD /* Huntling.xcdatamodeld */; };
-		48536656243E479C000178DD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48536655243E479C000178DD /* ContentView.swift */; };
 		48536658243E47A1000178DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48536657243E47A1000178DD /* Assets.xcassets */; };
 		4853665B243E47A1000178DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4853665A243E47A1000178DD /* Preview Assets.xcassets */; };
 		4853665E243E47A1000178DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4853665C243E47A1000178DD /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		480B6FF12446F9F500311836 /* TrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerView.swift; sourceTree = "<group>"; };
+		480B6FF324472EB300311836 /* TrackerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerListView.swift; sourceTree = "<group>"; };
 		483962362445E6ED002DBFD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4853664B243E479C000178DD /* Huntling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Huntling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4853664E243E479C000178DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		48536650243E479C000178DD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		48536653243E479C000178DD /* Huntling.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Huntling.xcdatamodel; sourceTree = "<group>"; };
-		48536655243E479C000178DD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		48536657243E47A1000178DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4853665A243E47A1000178DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4853665D243E47A1000178DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -69,7 +71,8 @@
 			children = (
 				4853664E243E479C000178DD /* AppDelegate.swift */,
 				48536650243E479C000178DD /* SceneDelegate.swift */,
-				48536655243E479C000178DD /* ContentView.swift */,
+				480B6FF324472EB300311836 /* TrackerListView.swift */,
+				480B6FF12446F9F500311836 /* TrackerView.swift */,
 				483962362445E6ED002DBFD3 /* GoogleService-Info.plist */,
 				48536657243E47A1000178DD /* Assets.xcassets */,
 				4853665C243E47A1000178DD /* LaunchScreen.storyboard */,
@@ -223,7 +226,8 @@
 			files = (
 				4853664F243E479C000178DD /* AppDelegate.swift in Sources */,
 				48536651243E479C000178DD /* SceneDelegate.swift in Sources */,
-				48536656243E479C000178DD /* ContentView.swift in Sources */,
+				480B6FF22446F9F500311836 /* TrackerView.swift in Sources */,
+				480B6FF424472EB300311836 /* TrackerListView.swift in Sources */,
 				48536654243E479C000178DD /* Huntling.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
