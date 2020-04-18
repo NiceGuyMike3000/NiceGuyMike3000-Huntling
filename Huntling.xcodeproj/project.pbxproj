@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		34A63C895302DF98156699B8 /* Pods_Huntling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */; };
 		480B6FF22446F9F500311836 /* TrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF12446F9F500311836 /* TrackerView.swift */; };
-		480B6FF424472EB300311836 /* TrackerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF324472EB300311836 /* TrackerListView.swift */; };
+		480B6FF424472EB300311836 /* TrackerListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF324472EB300311836 /* TrackerListVC.swift */; };
+		480B6FF624484BDB00311836 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF524484BDB00311836 /* Tracker.swift */; };
+		480B6FF82449FD7100311836 /* TrackerListTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480B6FF72449FD7100311836 /* TrackerListTVCell.swift */; };
 		483962372445E6ED002DBFD3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 483962362445E6ED002DBFD3 /* GoogleService-Info.plist */; };
 		4853664F243E479C000178DD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4853664E243E479C000178DD /* AppDelegate.swift */; };
 		48536651243E479C000178DD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48536650243E479C000178DD /* SceneDelegate.swift */; };
@@ -21,7 +23,9 @@
 
 /* Begin PBXFileReference section */
 		480B6FF12446F9F500311836 /* TrackerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerView.swift; sourceTree = "<group>"; };
-		480B6FF324472EB300311836 /* TrackerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerListView.swift; sourceTree = "<group>"; };
+		480B6FF324472EB300311836 /* TrackerListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerListVC.swift; sourceTree = "<group>"; };
+		480B6FF524484BDB00311836 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
+		480B6FF72449FD7100311836 /* TrackerListTVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackerListTVCell.swift; sourceTree = "<group>"; };
 		483962362445E6ED002DBFD3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4853664B243E479C000178DD /* Huntling.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Huntling.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4853664E243E479C000178DD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -71,8 +75,10 @@
 			children = (
 				4853664E243E479C000178DD /* AppDelegate.swift */,
 				48536650243E479C000178DD /* SceneDelegate.swift */,
-				480B6FF324472EB300311836 /* TrackerListView.swift */,
+				480B6FF324472EB300311836 /* TrackerListVC.swift */,
+				480B6FF72449FD7100311836 /* TrackerListTVCell.swift */,
 				480B6FF12446F9F500311836 /* TrackerView.swift */,
+				480B6FF524484BDB00311836 /* Tracker.swift */,
 				483962362445E6ED002DBFD3 /* GoogleService-Info.plist */,
 				48536657243E47A1000178DD /* Assets.xcassets */,
 				4853665C243E47A1000178DD /* LaunchScreen.storyboard */,
@@ -224,10 +230,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				480B6FF624484BDB00311836 /* Tracker.swift in Sources */,
 				4853664F243E479C000178DD /* AppDelegate.swift in Sources */,
 				48536651243E479C000178DD /* SceneDelegate.swift in Sources */,
+				480B6FF82449FD7100311836 /* TrackerListTVCell.swift in Sources */,
 				480B6FF22446F9F500311836 /* TrackerView.swift in Sources */,
-				480B6FF424472EB300311836 /* TrackerListView.swift in Sources */,
+				480B6FF424472EB300311836 /* TrackerListVC.swift in Sources */,
 				48536654243E479C000178DD /* Huntling.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -365,9 +373,10 @@
 			baseConfigurationReference = F8D9743FD96A4C1AB72A68D8 /* Pods-Huntling.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Huntling/Preview Content\"";
-				DEVELOPMENT_TEAM = 3JV8FUYK6L;
+				DEVELOPMENT_TEAM = 6BC8K9U3LM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Huntling/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -376,6 +385,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschilling.Huntling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -386,9 +396,10 @@
 			baseConfigurationReference = 8CF3A3C66E18A590D377A74D /* Pods-Huntling.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Huntling/Preview Content\"";
-				DEVELOPMENT_TEAM = 3JV8FUYK6L;
+				DEVELOPMENT_TEAM = 6BC8K9U3LM;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Huntling/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -397,6 +408,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschilling.Huntling;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

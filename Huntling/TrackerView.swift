@@ -29,7 +29,20 @@ struct TrackerView: View {
             Spacer()
             
             Button(action: {
-                print("Call button tapped!")
+
+                //let number: String = String(self.tra.phoneNumber)
+                
+                let number: String = self.tra.phoneNumber
+                
+                guard let url = URL(string: "tel://" + number) else { return }
+                
+                if UIApplication.shared.canOpenURL(url) {
+                    //print("Ho")
+                    UIApplication.shared.open(url)
+                } else {
+                    // print("Hi")
+                }
+                
             }) {
                 
                 Spacer()
