@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import CoreLocation
 
 class TrackerListVC : UIViewController {
     
-    // 1. Add Use Geo to filter button
+    // -> ad use geo func
+    
     // -> Hide Search when Geo disabled
     // 3. Add Suche nach PLZ
     // 2. Add Trackers
@@ -21,6 +23,24 @@ class TrackerListVC : UIViewController {
     var trackArr: [Tracker] = []
 
     var filteredTrackersArr: [Tracker] = []
+    
+    
+    var initialSetupDone: Bool!
+    
+    var geoFilterActive: Bool!
+    
+    
+    let geoFilterButton: UIButton = {
+        let button = UIButton(type: .system)
+        //button.setTitle("Geo Filter aktivieren", for: .normal)
+        button.titleLabel!.textAlignment = .center
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
+        button.addTarget(self, action: #selector(handleGeoFilterButton), for: .touchUpInside)
+        return button
+    }()
+    
+    
+    var locationManager: CLLocationManager!
 
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -48,6 +68,25 @@ class TrackerListVC : UIViewController {
         return searchController.isActive && !searchBarIsEmpty()
     }
     
+    
+    func setToActivate() {
+        
+        geoFilterButton.setTitle("Geo Filter aktivieren", for: .normal)
+        
+        geoFilterActive = false
+        
+    }
+    
+    
+    func setToDeactivate() {
+        
+        // geoFilterButton.titleLabel!.text = "Deaktivieren"
+        
+        geoFilterButton.setTitle("Deaktivieren", for: .normal)
+        
+        geoFilterActive = true
+        
+    }
     
     
     func getTrackers() {
@@ -77,7 +116,23 @@ class TrackerListVC : UIViewController {
         definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
         
-        view.backgroundColor = UIColor.white
+        view.addSubview(geoFilterButton)
+        geoFilterButton.translatesAutoresizingMaskIntoConstraints = false
+        geoFilterButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0).isActive = true
+        geoFilterButton.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
+        geoFilterButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
+        geoFilterButton.heightAnchor.constraint(equalToConstant: 41).isActive = true
+        
+        let px = 1 / UIScreen.main.scale
+        let line = UIView()
+        line.backgroundColor = UIColor.gray
+        
+        view.addSubview(line)
+        line.translatesAutoresizingMaskIntoConstraints = false
+        line.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        line.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        line.heightAnchor.constraint(equalToConstant: px).isActive = true
+        line.bottomAnchor.constraint(equalTo: geoFilterButton.bottomAnchor).isActive = true
         
         trackersTV = UITableView()
         trackersTV.dataSource = self
@@ -97,7 +152,7 @@ class TrackerListVC : UIViewController {
         trackersTV.translatesAutoresizingMaskIntoConstraints = false
         trackersTV.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 0).isActive = true
         trackersTV.rightAnchor.constraint(equalTo: view.rightAnchor, constant: 0).isActive = true
-        trackersTV.topAnchor.constraint(equalTo: view.topAnchor, constant: 0).isActive = true
+        trackersTV.topAnchor.constraint(equalTo: line.bottomAnchor, constant: 0).isActive = true
         trackersTV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
     }
@@ -107,31 +162,39 @@ class TrackerListVC : UIViewController {
     
     @objc func handleGeoFilterButton() {
         
-
-        let title: String = "Zugriff auf Standortdaten erteilen?"
-        
-        let message: String = "Huntling kann mit deiner Erlaubnis deinen Standort nutzen um die Auswahl auf die zuständigen Nachsuchegespanne zu reduzieren"
+        if geoFilterActive == true {
             
-            //. Deine Daten werden dabei nicht dauerhaft gespeichert, mit dritten geteilt und auch nicht in die Cloud übermittelt"
-        
-        
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        
-        alert.addAction(UIAlertAction(title: "Not Now", style: .default) { action -> Void in
-            // Just dismiss the action sheet
-        } )
-        
-        
-        alert.addAction(UIAlertAction(title: "Confirm", style: .default) { action -> Void in
-            DispatchQueue.main.async {
+            // Remove
+            
+            
+            geoFilterActive = false
+            
+        } else {
+
+            let title: String = "Zugriff auf Standortdaten erteilen?"
+            
+            let message: String = "Huntling kann mit deiner Erlaubnis deinen Standort nutzen um die Auswahl auf die zuständigen Nachsuchegespanne zu reduzieren"
                 
-                // Ask permission
-                
-            }
-        } )
-        
-        present(alert, animated: true, completion: nil)
+            
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            
+            alert.addAction(UIAlertAction(title: "Not Now", style: .default) { action -> Void in
+                // Just dismiss the action sheet
+            } )
+            
+            
+            alert.addAction(UIAlertAction(title: "Confirm", style: .default) { action -> Void in
+                DispatchQueue.main.async {
+                    
+                    self.locationManager.requestWhenInUseAuthorization()
+                    
+                }
+            } )
+            
+            present(alert, animated: true, completion: nil)
+            
+        }
         
         
     }
@@ -142,8 +205,67 @@ class TrackerListVC : UIViewController {
         super.viewDidLoad()
         
         getTrackers()
+        
+        view.backgroundColor = UIColor.white
+        
+        initialSetupDone = false
+        
+        
+        geoFilterActive = false
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.distanceFilter = 10
+        
+    }
+    
 
-        setup()
+}
+
+
+
+extension TrackerListVC: CLLocationManagerDelegate {
+    
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        
+        
+        if initialSetupDone == false {
+            
+            setup()
+            initialSetupDone = true
+            
+        }
+        
+        
+        switch status {
+            
+        case .notDetermined:
+            
+            setToActivate()
+            
+        case .restricted:
+            
+            setToActivate()
+
+        case .denied:
+            
+            setToActivate()
+            
+        case .authorizedAlways:
+            
+            setToDeactivate()
+            
+        case .authorizedWhenInUse:
+            
+            setToDeactivate()
+            
+        @unknown default:
+            
+            setToActivate()
+            
+        }
         
     }
     
@@ -171,6 +293,10 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
         
         if isFiltering() {
             tracker = filteredTrackersArr[indexPath.row]
+        } else if geoFilterActive == true {
+            // Add geoFilteredArr
+            tracker = trackArr[indexPath.row]
+            //
         } else {
             tracker = trackArr[indexPath.row]
         }
@@ -189,45 +315,6 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return CGFloat(79.5)
-    }
-    
-    
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let geoFilterButton: UIButton = {
-            let button = UIButton(type: .system)
-            button.setTitle("Geo Filter aktivieren", for: .normal)
-            button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
-            button.addTarget(self, action: #selector(handleGeoFilterButton), for: .touchUpInside)
-            return button
-        }()
-        
-        
-        let v = UIView()
-        v.backgroundColor = UIColor.white
-        v.addSubview(geoFilterButton)
-        geoFilterButton.translatesAutoresizingMaskIntoConstraints = false
-        geoFilterButton.centerXAnchor.constraint(equalTo: v.centerXAnchor).isActive = true
-        geoFilterButton.centerYAnchor.constraint(equalTo: v.centerYAnchor).isActive = true
-        
-        let px = 1 / UIScreen.main.scale
-        let line = UIView()
-        line.backgroundColor = tableView.separatorColor
-        
-        v.addSubview(line)
-        line.translatesAutoresizingMaskIntoConstraints = false
-        line.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
-        line.centerXAnchor.constraint(equalTo: v.centerXAnchor).isActive = true
-        line.heightAnchor.constraint(equalToConstant: px).isActive = true
-        line.bottomAnchor.constraint(equalTo: v.bottomAnchor).isActive = true
-        
-        return v
-    }
-    
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 41
     }
     
     
@@ -271,113 +358,6 @@ extension TrackerListVC: UISearchResultsUpdating {
     }
     
 }
-
-
-
-/*
-import SwiftUI
-
-struct TrackerListView : View {
-        
-    /// posts
-    let trackers = TestData.trackers()
-    
-    @State private var searchText : String = ""
-    
-    /// view body
-    var body: some View {
-        
-        // Provides NavigationController
-        NavigationView {
-            
-            // Search as Header
-            // Add Search funct by plz
-            
-            // SearchBar(text: $searchText)
-            
-            List {
-                
-                // loop through all the posts and create a post view for each item
-                ForEach(trackers) { tracker in
-                    TrackerView(tra: tracker)
-                }
-                
-            }
-            .navigationBarTitle(Text("Nachsucheführer"))
-            //.padding(.leading, 0)
-            //.padding(.trailing, 0)
-            
-            // set navbar title
-            
-            
-            // Add Toggleble Button to activate geo loc + ActionSheet app & Sys level
-            
-        }
-        
-    }
-    
-}
-
-
-struct ButtonBox : View {
-    
-    var body: some View {
-        
-        Button(action: {
-
-        }) {
-            
-            Spacer()
-            
-            /*
-            Image(systemName: "phone.circle")
-            .font(.largeTitle)
-            .foregroundColor(.blue)
-            */
-            
-            Spacer()
-    
-        }
-        
-    }
-    
-}
-
-
-struct SearchBar: UIViewRepresentable {
-
-    @Binding var text: String
-
-    class Coordinator: NSObject, UISearchBarDelegate {
-
-        @Binding var text: String
-
-        init(text: Binding<String>) {
-            _text = text
-        }
-
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            text = searchText
-        }
-    }
-
-    func makeCoordinator() -> SearchBar.Coordinator {
-        return Coordinator(text: $text)
-    }
-
-    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
-        let searchBar = UISearchBar(frame: .zero)
-        searchBar.delegate = context.coordinator
-        searchBar.searchBarStyle = .minimal
-        return searchBar
-    }
-
-    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
-        uiView.text = text
-    }
-    
-}
-*/
 
 
 /*
