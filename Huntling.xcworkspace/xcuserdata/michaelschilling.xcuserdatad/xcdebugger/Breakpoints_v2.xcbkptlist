@@ -7,64 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D97A1B23-D6E9-48DC-99EB-ECE550844D39"
+            uuid = "8657FCFE-2FDD-4BA1-966C-C3604565DC81"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Huntling/TrackerListVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "setToActivate()"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "handleGeoFilterButton()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0625FB2D-ED3E-45EC-9C8D-86F463733F78"
+            uuid = "FA58C0E5-BC70-40CA-9E1B-BFECAB08EB1D"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Huntling/TrackerListVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "88"
-            endingLineNumber = "88"
-            landmarkName = "setToDeactivate()"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "handleGeoFilterButton()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "473205C6-699B-4162-958D-22BF4135B4F8"
+            uuid = "D8AAAEE2-BC0A-46F6-BB47-1CA74F23A198"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Huntling/TrackerListVC.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
-            landmarkName = "setToActivate()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "AE05C561-479D-434C-A550-E77C8BAFEE87"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Huntling/TrackerListVC.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "82"
-            endingLineNumber = "82"
-            landmarkName = "setToDeactivate()"
+            startingLineNumber = "207"
+            endingLineNumber = "207"
+            landmarkName = "handleGeoFilterButton()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

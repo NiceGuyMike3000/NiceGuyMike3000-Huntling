@@ -11,23 +11,30 @@ import CoreLocation
 
 class TrackerListVC : UIViewController {
     
-    // -> ad use geo func
+    // 1. Figure out What geoFilter does and implement
+    // - figure out how to display filtered Results
     
-    // -> Hide Search when Geo disabled
-    // 3. Add Suche nach PLZ
-    // 2. Add Trackers
+    // *. Activate geoFilter
     
+    // 2. Add Suche nach PLZ
+    // 3. Add Search for filter
+    // 4. Scrape trackers
+    // 5. Add Trackers
+    // 6. Implement CoreData
     
     var trackersTV: UITableView!
 
-    var trackArr: [Tracker] = []
-
-    var filteredTrackersArr: [Tracker] = []
+    var allTrackers: [Tracker] = []
+    var geoedTrackers: [Tracker] = []
+    
+    var displayedTrackers: [Tracker] = []
     
     
     var initialSetupDone: Bool!
     
     var geoFilterActive: Bool!
+    
+    var locationAvailable: Bool!
     
     
     let geoFilterButton: UIButton = {
@@ -52,12 +59,28 @@ class TrackerListVC : UIViewController {
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         
-        filteredTrackersArr = trackArr.filter({( tracker : Tracker) -> Bool in
+        if geoFilterActive == true {
             
-            let city = tracker.city
-            return city.lowercased().contains(searchText.lowercased())
+            displayedTrackers = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+                
+                let city = tracker.city
+                return city.lowercased().contains(searchText.lowercased())
+                
+                // add PLZ search
+            })
             
-        })
+        } else {
+            
+            displayedTrackers = allTrackers.filter({( tracker : Tracker) -> Bool in
+                
+                let city = tracker.city
+                return city.lowercased().contains(searchText.lowercased())
+                
+                // add PLZ search
+            })
+            
+        }
+        
         
         trackersTV.reloadData()
     }
@@ -75,17 +98,21 @@ class TrackerListVC : UIViewController {
         
         geoFilterActive = false
         
+        displayedTrackers = allTrackers
+        
+        trackersTV.reloadData()
     }
     
     
     func setToDeactivate() {
-        
-        // geoFilterButton.titleLabel!.text = "Deaktivieren"
-        
+  
         geoFilterButton.setTitle("Deaktivieren", for: .normal)
         
         geoFilterActive = true
         
+        displayedTrackers = geoedTrackers
+        
+        trackersTV.reloadData()
     }
     
     
@@ -99,14 +126,14 @@ class TrackerListVC : UIViewController {
         
         let tracker4 = Tracker(name: "Sina Cak", city: "Frankfurt", plz: "78900", phoneNumber: "4")
         
-        trackArr = [tracker1, tracker2, tracker3, tracker4]
+        allTrackers = [tracker1, tracker2, tracker3, tracker4]
         
     }
     
     
     
     func setup() {
-        
+    
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
@@ -155,6 +182,10 @@ class TrackerListVC : UIViewController {
         trackersTV.topAnchor.constraint(equalTo: line.bottomAnchor, constant: 0).isActive = true
         trackersTV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0).isActive = true
         
+        displayedTrackers = allTrackers
+        
+        trackersTV.reloadData()
+        
     }
     
     
@@ -162,37 +193,52 @@ class TrackerListVC : UIViewController {
     
     @objc func handleGeoFilterButton() {
         
+        // debug ... 
+        
         if geoFilterActive == true {
             
-            // Remove
+            displayedTrackers = allTrackers
             
-            
-            geoFilterActive = false
+            trackersTV.reloadData()
+        
+            setToActivate()
             
         } else {
-
-            let title: String = "Zugriff auf Standortdaten erteilen?"
             
-            let message: String = "Huntling kann mit deiner Erlaubnis deinen Standort nutzen um die Auswahl auf die zuständigen Nachsuchegespanne zu reduzieren"
+            
+            if locationAvailable == true {
                 
-            
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            
-            
-            alert.addAction(UIAlertAction(title: "Not Now", style: .default) { action -> Void in
-                // Just dismiss the action sheet
-            } )
-            
-            
-            alert.addAction(UIAlertAction(title: "Confirm", style: .default) { action -> Void in
-                DispatchQueue.main.async {
+                displayedTrackers = geoedTrackers
+                
+                trackersTV.reloadData()
+                
+            } else {
+                
+                let title: String = "Zugriff auf Standortdaten erteilen?"
+                
+                let message: String = "Huntling kann mit deiner Erlaubnis deinen Standort nutzen um die Auswahl auf die zuständigen Nachsuchegespanne zu reduzieren"
                     
-                    self.locationManager.requestWhenInUseAuthorization()
-                    
-                }
-            } )
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                
+                
+                alert.addAction(UIAlertAction(title: "Nicht jetzt", style: .default) { action -> Void in
+                    // Just dismiss the action sheet
+                } )
+                
+                
+                alert.addAction(UIAlertAction(title: "Bestätigen", style: .default) { action -> Void in
+                    DispatchQueue.main.async {
+                        
+                        self.locationManager.requestWhenInUseAuthorization()
+                        
+                    }
+                } )
+                
+                present(alert, animated: true, completion: nil)
+                
+            }
             
-            present(alert, animated: true, completion: nil)
             
         }
         
@@ -210,7 +256,6 @@ class TrackerListVC : UIViewController {
         
         initialSetupDone = false
         
-        
         geoFilterActive = false
         
         locationManager = CLLocationManager()
@@ -220,7 +265,7 @@ class TrackerListVC : UIViewController {
         
     }
     
-
+    
 }
 
 
@@ -232,37 +277,41 @@ extension TrackerListVC: CLLocationManagerDelegate {
         
         
         if initialSetupDone == false {
-            
             setup()
             initialSetupDone = true
-            
         }
         
         
         switch status {
-            
+        
         case .notDetermined:
             
+            locationAvailable = false
             setToActivate()
             
         case .restricted:
             
+            locationAvailable = false
             setToActivate()
 
         case .denied:
             
+            locationAvailable = false
             setToActivate()
             
         case .authorizedAlways:
             
+            locationAvailable = true
             setToDeactivate()
             
         case .authorizedWhenInUse:
             
+            locationAvailable = true
             setToDeactivate()
             
         @unknown default:
             
+            locationAvailable = false
             setToActivate()
             
         }
@@ -278,28 +327,13 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if isFiltering() {
-            return filteredTrackersArr.count
-        }
-        
-        return trackArr.count
+        return displayedTrackers.count
     }
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let tracker: Tracker
-        
-        if isFiltering() {
-            tracker = filteredTrackersArr[indexPath.row]
-        } else if geoFilterActive == true {
-            // Add geoFilteredArr
-            tracker = trackArr[indexPath.row]
-            //
-        } else {
-            tracker = trackArr[indexPath.row]
-        }
+        let tracker: Tracker = displayedTrackers[indexPath.row]
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackerListTVCell", for: indexPath) as! TrackerListTVCell
         
@@ -325,22 +359,12 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
 extension TrackerListVC: TrackerListTVCellDelegate {
     
     func didPressCallButton(cell: UITableViewCell) {
-        // Add Call Functionality
-        //print("Hi")
         
         guard let indexPath: IndexPath = trackersTV.indexPath(for: cell) else { return }
         
         var tracker: Tracker!
         
-        if isFiltering() {
-            
-            tracker = filteredTrackersArr[indexPath.row]
-            
-        } else {
-            
-            tracker = trackArr[indexPath.row]
-            
-        }
+        tracker = displayedTrackers[indexPath.row]
         
         if let url = URL(string: "tel://\(tracker.phoneNumber)") {
             UIApplication.shared.open(url)
@@ -360,26 +384,4 @@ extension TrackerListVC: UISearchResultsUpdating {
 }
 
 
-/*
-/// Test Data
-struct TestData {
-    
-    /// posts
-    static func trackers() -> [Tracker] {
-        
-        let tracker1 = Tracker(name: "Gustav Löhne", city: "Aachen", plz: "12345", phoneNumber: "1")
-        
-        let tracker2 = Tracker(name: "Anton Strauch", city: "München", plz: "56455", phoneNumber: "2")
-        
-        let tracker3 = Tracker(name: "Grav Mag", city: "Hamburg", plz: "12225", phoneNumber: "3")
-        
-        let tracker4 = Tracker(name: "Sina Cak", city: "Frankfurt", plz: "78900", phoneNumber: "4")
-        
-        return [tracker1, tracker2, tracker3, tracker4]
-        
-    }
-    
-    
-}
-*/
 
