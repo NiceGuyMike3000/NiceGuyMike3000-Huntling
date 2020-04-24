@@ -11,16 +11,21 @@ import CoreLocation
 
 class TrackerListVC : UIViewController {
     
-    // 1. Figure out What geoFilter does and implement
-    // - figure out how to display filtered Results
-    
-    // *. Activate geoFilter
     
     // 2. Add Suche nach PLZ
     // 3. Add Search for filter
     // 4. Scrape trackers
     // 5. Add Trackers
     // 6. Implement CoreData
+    
+    // Add Icons
+    
+    // Publish
+    
+    // Go to school
+    
+    // *: Improve GeoFilter Algo
+    
     
     var trackersTV: UITableView!
 
@@ -39,7 +44,6 @@ class TrackerListVC : UIViewController {
     
     let geoFilterButton: UIButton = {
         let button = UIButton(type: .system)
-        //button.setTitle("Geo Filter aktivieren", for: .normal)
         button.titleLabel!.textAlignment = .center
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         button.addTarget(self, action: #selector(handleGeoFilterButton), for: .touchUpInside)
@@ -59,27 +63,45 @@ class TrackerListVC : UIViewController {
     
     func filterContentForSearchText(_ searchText: String, scope: String = "All") {
         
-        if geoFilterActive == true {
+        if searchText == "" {
             
-            displayedTrackers = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+            if geoFilterActive == true {
                 
-                let city = tracker.city
-                return city.lowercased().contains(searchText.lowercased())
+                displayedTrackers = geoedTrackers
                 
-                // add PLZ search
-            })
+            } else {
+                
+                displayedTrackers = allTrackers
+                
+            }
             
         } else {
             
-            displayedTrackers = allTrackers.filter({( tracker : Tracker) -> Bool in
+
+            if geoFilterActive == true {
                 
-                let city = tracker.city
-                return city.lowercased().contains(searchText.lowercased())
+                displayedTrackers = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+                    
+                    let city = tracker.city
+                    return city.lowercased().contains(searchText.lowercased())
+                    
+                    // add PLZ search
+                })
                 
-                // add PLZ search
-            })
+            } else {
+                
+                displayedTrackers = allTrackers.filter({( tracker : Tracker) -> Bool in
+                    
+                    let city = tracker.city
+                    return city.lowercased().contains(searchText.lowercased())
+                    
+                    // add PLZ search
+                })
+                
+            }
             
         }
+        
         
         
         trackersTV.reloadData()
@@ -105,7 +127,7 @@ class TrackerListVC : UIViewController {
     
     
     func setToDeactivate() {
-  
+        
         geoFilterButton.setTitle("Deaktivieren", for: .normal)
         
         geoFilterActive = true
@@ -118,15 +140,19 @@ class TrackerListVC : UIViewController {
     
     func getTrackers() {
         
-        let tracker1 = Tracker(name: "Gustav Löhne", city: "Aachen", plz: "12345", phoneNumber: "1")
+        let tracker1 = Tracker(name: "Gustav Löhne", city: "Aachen", plz: "12345", phoneNumber: "1", location: CLLocation.init(latitude: 50.774720, longitude: 6.083920))
         
-        let tracker2 = Tracker(name: "Anton Strauch", city: "München", plz: "56455", phoneNumber: "2")
+        let tracker2 = Tracker(name: "Anton Strauch", city: "München", plz: "56455", phoneNumber: "2", location: CLLocation.init(latitude: 48.137611, longitude: 11.579940))
         
-        let tracker3 = Tracker(name: "Grav Mag", city: "Hamburg", plz: "12225", phoneNumber: "3")
+        let tracker3 = Tracker(name: "Grav Mag", city: "Hamburg", plz: "12225", phoneNumber: "3", location: CLLocation.init(latitude: 53.544030, longitude: 9.989870))
         
-        let tracker4 = Tracker(name: "Sina Cak", city: "Frankfurt", plz: "78900", phoneNumber: "4")
+        let tracker4 = Tracker(name: "Sina Cak", city: "Frankfurt", plz: "78900", phoneNumber: "4", location: CLLocation.init(latitude: 50.112550, longitude: 8.672040))
         
-        allTrackers = [tracker1, tracker2, tracker3, tracker4]
+        let tracker5 = Tracker(name: "Soba Luk", city: "Frankfurt", plz: "78900", phoneNumber: "5", location: CLLocation.init(latitude: 50.112570, longitude: 8.672020))
+        
+        let tracker6 = Tracker(name: "Jerry Tub", city: "Aachen", plz: "12345", phoneNumber: "6", location: CLLocation.init(latitude: 50.774000, longitude: 6.083940))
+        
+        allTrackers = [tracker1, tracker2, tracker3, tracker4, tracker5, tracker6]
         
     }
     
@@ -193,7 +219,6 @@ class TrackerListVC : UIViewController {
     
     @objc func handleGeoFilterButton() {
         
-        // debug ... 
         
         if geoFilterActive == true {
             
@@ -211,6 +236,8 @@ class TrackerListVC : UIViewController {
                 displayedTrackers = geoedTrackers
                 
                 trackersTV.reloadData()
+                
+                setToDeactivate()
                 
             } else {
                 
@@ -261,7 +288,7 @@ class TrackerListVC : UIViewController {
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 10
+        locationManager.distanceFilter = 1000
         
     }
     
@@ -304,10 +331,14 @@ extension TrackerListVC: CLLocationManagerDelegate {
             locationAvailable = true
             setToDeactivate()
             
+            locationManager.startUpdatingLocation()
+            
         case .authorizedWhenInUse:
             
             locationAvailable = true
             setToDeactivate()
+            
+            locationManager.startUpdatingLocation()
             
         @unknown default:
             
@@ -318,6 +349,88 @@ extension TrackerListVC: CLLocationManagerDelegate {
         
     }
     
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
+        let loc = locations[locations.count-1]
+        
+        // This algo needs work
+        var newGeoedTrackers: [Tracker] = []
+        
+        var i = 0
+        
+        while i < 5 {
+            
+            var wasInserted = false
+            
+            let trkDist = allTrackers[i].location.distance(from: loc)
+            
+            var j = 0
+            
+            while j < newGeoedTrackers.count {
+                
+                if wasInserted == false {
+                    
+                    let dist = newGeoedTrackers[j].location.distance(from: loc)
+                    
+                    if trkDist <= dist {
+                        
+                        newGeoedTrackers.insert(allTrackers[i], at: j)
+                        
+                        wasInserted = true
+                    }
+                    
+                }
+                
+                j += 1
+            }
+            
+            if wasInserted == false {
+                newGeoedTrackers.insert(allTrackers[i], at: newGeoedTrackers.count)
+            }
+            
+            i += 1
+        }
+        
+        
+        while i < allTrackers.count {
+            
+            var wasInserted = false
+            
+            let trkDist = allTrackers[i].location.distance(from: loc)
+            
+            var j = 0
+            
+            while j < 5 {
+                
+                if wasInserted == false {
+                    
+                    let dist = newGeoedTrackers[j].location.distance(from: loc)
+                    
+                    if trkDist <= dist {
+                        newGeoedTrackers.insert(allTrackers[i], at: j)
+                        newGeoedTrackers.remove(at: 5)
+                        wasInserted = true
+                    }
+                    
+                }
+                
+                j += 1
+            }
+            
+            i += 1
+        }
+        
+        
+        geoedTrackers = newGeoedTrackers
+        
+        displayedTrackers = geoedTrackers
+        
+        if geoFilterActive == true {
+            trackersTV.reloadData()
+        }
+        
+    }
 
 }
 
@@ -338,7 +451,7 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackerListTVCell", for: indexPath) as! TrackerListTVCell
         
         cell.nameLabel.text = tracker.name
-        cell.cityLabel.text = tracker.city
+        cell.cityLabel.text = tracker.plz + " " + tracker.city
         
         cell.delegate = self
         

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 
 struct Tracker: Identifiable {
@@ -16,12 +17,14 @@ struct Tracker: Identifiable {
     let city: String
     let plz: String
     let phoneNumber: String
+    let location: CLLocation
     
-    init(name: String, city: String, plz: String, phoneNumber: String) {
+    init(name: String, city: String, plz: String, phoneNumber: String, location: CLLocation) {
         self.name = name
         self.city = city
         self.plz = plz
         self.phoneNumber = phoneNumber
+        self.location = location
     }
     
 }
