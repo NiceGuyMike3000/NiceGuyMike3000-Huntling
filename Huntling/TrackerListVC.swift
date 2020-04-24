@@ -12,11 +12,11 @@ import CoreLocation
 class TrackerListVC : UIViewController {
     
     
-    // 2. Add Suche nach PLZ
-    // 3. Add Search for filter
-    // 4. Scrape trackers
+    // Add prox func
+    
+    // Add JSON File
+    // 3. Scrape trackers -> Ask Phil
     // 5. Add Trackers
-    // 6. Implement CoreData
     
     // Add Icons
     
@@ -25,7 +25,9 @@ class TrackerListVC : UIViewController {
     // Go to school
     
     // *: Improve GeoFilter Algo
-    
+    // *. Improve PLZ Search Algo
+    // ->. Implement CoreData
+    // ->. Implement Firebase to update
     
     var trackersTV: UITableView!
 
@@ -80,38 +82,71 @@ class TrackerListVC : UIViewController {
 
             if geoFilterActive == true {
                 
-                displayedTrackers = geoedTrackers.filter({( tracker : Tracker) -> Bool in
-                    
+                let cityMatches = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+                
                     let city = tracker.city
+                
                     return city.lowercased().contains(searchText.lowercased())
                     
-                    // add PLZ search
                 })
+                
+                let plzMatches = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+                
+                    let plz = tracker.plz
+                
+                    return plz.contains(searchText)
+                    
+                })
+                
+                var mesh: [Tracker] = []
+                
+                for tra in cityMatches {
+                    mesh.append(tra)
+                }
+                
+                for tra in plzMatches {
+                    mesh.append(tra)
+                }
+                
+                displayedTrackers = mesh
                 
             } else {
                 
-                displayedTrackers = allTrackers.filter({( tracker : Tracker) -> Bool in
-                    
+                let cityMatches = allTrackers.filter({( tracker : Tracker) -> Bool in
+                
                     let city = tracker.city
+                
                     return city.lowercased().contains(searchText.lowercased())
                     
-                    // add PLZ search
                 })
+                
+                let plzMatches = allTrackers.filter({( tracker : Tracker) -> Bool in
+                
+                    let plz = tracker.plz
+                
+                    return plz.contains(searchText)
+                    
+                })
+                
+                var mesh: [Tracker] = []
+                
+                for tra in cityMatches {
+                    mesh.append(tra)
+                }
+                
+                for tra in plzMatches {
+                    mesh.append(tra)
+                }
+                
+                displayedTrackers = mesh
                 
             }
             
         }
         
-        
-        
         trackersTV.reloadData()
     }
     
-    
-    
-    func isFiltering() -> Bool {
-        return searchController.isActive && !searchBarIsEmpty()
-    }
     
     
     func setToActivate() {
@@ -365,6 +400,8 @@ extension TrackerListVC: CLLocationManagerDelegate {
             
             let trkDist = allTrackers[i].location.distance(from: loc)
             
+            let doubleDist = Double(trkDist)
+            
             var j = 0
             
             while j < newGeoedTrackers.count {
@@ -377,7 +414,21 @@ extension TrackerListVC: CLLocationManagerDelegate {
                         
                         newGeoedTrackers.insert(allTrackers[i], at: j)
                         
+                        let kmDist = round(doubleDist/1000)
+                        
+                        var distStr: String!
+                        
+                        if kmDist == 0 {
+                            distStr = "ca. 1km"
+                        } else {
+                            distStr = "ca. " + String(kmDist) + "km"
+                        }
+                        
+                        
+                        newGeoedTrackers[j].distance = distStr
+                        
                         wasInserted = true
+                        
                     }
                     
                 }
@@ -453,6 +504,14 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
         cell.nameLabel.text = tracker.name
         cell.cityLabel.text = tracker.plz + " " + tracker.city
         
+        if geoFilterActive == true {
+            
+            // Add CellDelegate and update later
+            cell.proximityLabel.text = "1"
+        } else {
+            cell.proximityLabel.text = ""
+        }
+        
         cell.delegate = self
         
         return cell
@@ -461,7 +520,7 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return CGFloat(79.5)
+        return CGFloat(85)
     }
     
     
@@ -491,7 +550,15 @@ extension TrackerListVC: TrackerListTVCellDelegate {
 extension TrackerListVC: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
+        
+        if searchController.isActive && searchBarIsEmpty() {
+            searchController.searchBar.placeholder = "Suchen nach Stadt oder PLZ"
+        } else {
+            searchController.searchBar.placeholder = "Suchen"
+        }
+        
         filterContentForSearchText(searchController.searchBar.text!)
+        
     }
     
 }

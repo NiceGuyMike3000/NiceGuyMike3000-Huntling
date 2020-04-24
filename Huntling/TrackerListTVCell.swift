@@ -30,12 +30,21 @@ class TrackerListTVCell: UITableViewCell {
         return label
     }()
     
-    
     let cityLabel: UILabel = {
         let label = UILabel.init()
         label.numberOfLines = 1
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 17)
+        return label
+    }()
+    
+    
+    let proximityLabel: UILabel = {
+        let label = UILabel.init()
+        label.numberOfLines = 1
+        label.textAlignment = .right
+        label.font = UIFont.systemFont(ofSize: 17)
+        label.text = "prox"
         return label
     }()
     
@@ -54,18 +63,17 @@ class TrackerListTVCell: UITableViewCell {
     }
     
     
-    
     func setup() {
         
         contentView.addSubview(nameLabel)
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12.5).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
         
         contentView.addSubview(cityLabel)
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         cityLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        cityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 12.5).isActive = true
+        cityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13).isActive = true
         
         contentView.addSubview(callButton)
         callButton.translatesAutoresizingMaskIntoConstraints = false
@@ -75,6 +83,10 @@ class TrackerListTVCell: UITableViewCell {
         callButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         callButton.addTarget(self, action: #selector(handleCallButton), for: .touchUpInside)
         
+        contentView.addSubview(proximityLabel)
+        proximityLabel.translatesAutoresizingMaskIntoConstraints = false
+        proximityLabel.rightAnchor.constraint(equalTo: callButton.leftAnchor, constant: -20).isActive = true
+        proximityLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
     }
     
     
@@ -90,7 +102,6 @@ class TrackerListTVCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
-    
     
     
     required init?(coder aDecoder: NSCoder) {

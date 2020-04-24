@@ -10,7 +10,9 @@ import Foundation
 import CoreLocation
 
 
-struct Tracker: Identifiable {
+//struct Tracker: Identifiable {
+
+class Tracker {
     
     var id: String = UUID().uuidString
     let name: String
@@ -18,6 +20,10 @@ struct Tracker: Identifiable {
     let plz: String
     let phoneNumber: String
     let location: CLLocation
+    
+    
+    var distance: String?
+    
     
     init(name: String, city: String, plz: String, phoneNumber: String, location: CLLocation) {
         self.name = name
