@@ -44,7 +44,7 @@ class TrackerListTVCell: UITableViewCell {
         label.numberOfLines = 1
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: 17)
-        label.text = "prox"
+        //label.text = "prox"
         return label
     }()
     

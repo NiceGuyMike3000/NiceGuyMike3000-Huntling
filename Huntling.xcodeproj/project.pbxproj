@@ -18,6 +18,7 @@
 		48536658243E47A1000178DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48536657243E47A1000178DD /* Assets.xcassets */; };
 		4853665B243E47A1000178DD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4853665A243E47A1000178DD /* Preview Assets.xcassets */; };
 		4853665E243E47A1000178DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4853665C243E47A1000178DD /* LaunchScreen.storyboard */; };
+		4880262424546573008F34A9 /* CurrentTrackers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4880262324546573008F34A9 /* CurrentTrackers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		4853665A243E47A1000178DD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4853665D243E47A1000178DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4853665F243E47A1000178DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4880262324546573008F34A9 /* CurrentTrackers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentTrackers.swift; sourceTree = "<group>"; };
 		8CF3A3C66E18A590D377A74D /* Pods-Huntling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Huntling.release.xcconfig"; path = "Target Support Files/Pods-Huntling/Pods-Huntling.release.xcconfig"; sourceTree = "<group>"; };
 		D94A9D1A41ADF6A6E8FC7FC2 /* Pods_Huntling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Huntling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8D9743FD96A4C1AB72A68D8 /* Pods-Huntling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Huntling.debug.xcconfig"; path = "Target Support Files/Pods-Huntling/Pods-Huntling.debug.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 				480B6FF324472EB300311836 /* TrackerListVC.swift */,
 				480B6FF72449FD7100311836 /* TrackerListTVCell.swift */,
 				480B6FF524484BDB00311836 /* Tracker.swift */,
+				4880262324546573008F34A9 /* CurrentTrackers.swift */,
 				483962362445E6ED002DBFD3 /* GoogleService-Info.plist */,
 				48536657243E47A1000178DD /* Assets.xcassets */,
 				4853665C243E47A1000178DD /* LaunchScreen.storyboard */,
@@ -228,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				480B6FF624484BDB00311836 /* Tracker.swift in Sources */,
+				4880262424546573008F34A9 /* CurrentTrackers.swift in Sources */,
 				4853664F243E479C000178DD /* AppDelegate.swift in Sources */,
 				48536651243E479C000178DD /* SceneDelegate.swift in Sources */,
 				480B6FF82449FD7100311836 /* TrackerListTVCell.swift in Sources */,

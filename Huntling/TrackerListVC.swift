@@ -9,10 +9,9 @@
 import UIKit
 import CoreLocation
 
+
 class TrackerListVC : UIViewController {
     
-    
-    // Add prox func
     
     // Add JSON File
     // 3. Scrape trackers -> Ask Phil
@@ -108,6 +107,20 @@ class TrackerListVC : UIViewController {
                     mesh.append(tra)
                 }
                 
+                /*
+                geoedTrackers = mesh
+                
+                
+                var i = 0
+                
+                while i < geoedTrackers.count {
+                    
+                    geoedTrackers[i].delegate = self
+                    
+                    i += 1
+                }
+                */
+                
                 displayedTrackers = mesh
                 
             } else {
@@ -137,6 +150,22 @@ class TrackerListVC : UIViewController {
                 for tra in plzMatches {
                     mesh.append(tra)
                 }
+                
+                
+                
+                /*
+                geoedTrackers = mesh
+                
+                
+                var i = 0
+                
+                while i < geoedTrackers.count {
+                    
+                    geoedTrackers[i].delegate = self
+                    
+                    i += 1
+                }
+                */
                 
                 displayedTrackers = mesh
                 
@@ -172,7 +201,7 @@ class TrackerListVC : UIViewController {
         trackersTV.reloadData()
     }
     
-    
+    /*
     func getTrackers() {
         
         let tracker1 = Tracker(name: "Gustav Löhne", city: "Aachen", plz: "12345", phoneNumber: "1", location: CLLocation.init(latitude: 50.774720, longitude: 6.083920))
@@ -185,10 +214,18 @@ class TrackerListVC : UIViewController {
         
         let tracker5 = Tracker(name: "Soba Luk", city: "Frankfurt", plz: "78900", phoneNumber: "5", location: CLLocation.init(latitude: 50.112570, longitude: 8.672020))
         
-        let tracker6 = Tracker(name: "Jerry Tub", city: "Aachen", plz: "12345", phoneNumber: "6", location: CLLocation.init(latitude: 50.774000, longitude: 6.083940))
+        let tracker6 = Tracker(name: "Jerry Tub", city: "Aachen", plz: "12345", phoneNumber: "6", location: CLLocation.init(latitude: 50.774720, longitude: 6.083940))
         
         allTrackers = [tracker1, tracker2, tracker3, tracker4, tracker5, tracker6]
         
+    }
+    */
+    
+    func getUpToDateTrackers() {
+        
+        // ...
+        
+        allTrackers = currentTrackers
     }
     
     
@@ -312,7 +349,9 @@ class TrackerListVC : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        getTrackers()
+        //getTrackers()
+        
+        getUpToDateTrackers()
         
         view.backgroundColor = UIColor.white
         
@@ -420,8 +459,17 @@ extension TrackerListVC: CLLocationManagerDelegate {
                         
                         if kmDist == 0 {
                             distStr = "ca. 1km"
+                        } else if kmDist < 30 {
+                            let hlp = Int(kmDist)
+                            distStr = "ca. " + String(hlp) + "km"
+                        } else if kmDist < 100 {
+                            let hlp = Int(5*(round(kmDist/5)))
+                            
+                            distStr = "ca. " + String(hlp) + "km"
                         } else {
-                            distStr = "ca. " + String(kmDist) + "km"
+                            let hlp = Int(10*(round(kmDist/10)))
+                            
+                            distStr = "ca. " + String(hlp) + "km"
                         }
                         
                         
@@ -438,6 +486,29 @@ extension TrackerListVC: CLLocationManagerDelegate {
             
             if wasInserted == false {
                 newGeoedTrackers.insert(allTrackers[i], at: newGeoedTrackers.count)
+                
+
+                let kmDist = round(doubleDist/1000)
+                
+                var distStr: String!
+                
+                if kmDist == 0 {
+                    distStr = "ca. 1km"
+                } else if kmDist < 30 {
+                    let hlp = Int(kmDist)
+                    distStr = "ca. " + String(hlp) + "km"
+                } else if kmDist < 100 {
+                    let hlp = Int(5*(round(kmDist/5)))
+                    
+                    distStr = "ca. " + String(hlp) + "km"
+                } else {
+                    let hlp = Int(10*(round(kmDist/10)))
+                    
+                    distStr = "ca. " + String(hlp) + "km"
+                }
+                
+                
+                newGeoedTrackers[newGeoedTrackers.count-1].distance = distStr
             }
             
             i += 1
@@ -460,7 +531,33 @@ extension TrackerListVC: CLLocationManagerDelegate {
                     
                     if trkDist <= dist {
                         newGeoedTrackers.insert(allTrackers[i], at: j)
+                        
+                        let kmDist = round(dist/1000)
+                        
+                        var distStr: String!
+                        
+                        if kmDist == 0 {
+                            distStr = "ca. 1km"
+                        } else if kmDist < 30 {
+                            let hlp = Int(kmDist)
+                            distStr = "ca. " + String(hlp) + "km"
+                        } else if kmDist < 100 {
+                            let hlp = Int(5*(round(kmDist/5)))
+                            
+                            distStr = "ca. " + String(hlp) + "km"
+                        } else {
+                            let hlp = Int(10*(round(kmDist/10)))
+                            
+                            distStr = "ca. " + String(hlp) + "km"
+                        }
+                        
+                        
+                        newGeoedTrackers[j].distance = distStr
+                        
                         newGeoedTrackers.remove(at: 5)
+                        
+                        
+                        
                         wasInserted = true
                     }
                     
@@ -476,6 +573,7 @@ extension TrackerListVC: CLLocationManagerDelegate {
         geoedTrackers = newGeoedTrackers
         
         displayedTrackers = geoedTrackers
+        
         
         if geoFilterActive == true {
             trackersTV.reloadData()
@@ -506,8 +604,12 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
         
         if geoFilterActive == true {
             
-            // Add CellDelegate and update later
-            cell.proximityLabel.text = "1"
+            if let dist = tracker.distance {
+                cell.proximityLabel.text = dist
+            } else {
+                cell.proximityLabel.text = "1"
+            }
+            
         } else {
             cell.proximityLabel.text = ""
         }
@@ -564,4 +666,31 @@ extension TrackerListVC: UISearchResultsUpdating {
 }
 
 
+/*
+extension TrackerListVC: TrackerDelegate {
+    
+    
+    func updateDistance(id: String, distance: String) {
+        
+        var i = 0
+        
+        while i < geoedTrackers.count {
+            
+            if geoedTrackers[i].id == id {
+                
+                geoedTrackers[i].distance = distance
+                
+                displayedTrackers[i].distance = distance
+                
+            }
+            
+            i += 1
+        }
 
+        trackersTV.reloadData()
+        
+    }
+    
+    
+}
+*/

@@ -10,7 +10,13 @@ import Foundation
 import CoreLocation
 
 
-//struct Tracker: Identifiable {
+/*
+protocol TrackerDelegate {
+    
+    func updateDistance(id: String, distance: String)
+    
+}
+*/
 
 class Tracker {
     
@@ -20,7 +26,6 @@ class Tracker {
     let plz: String
     let phoneNumber: String
     let location: CLLocation
-    
     
     var distance: String?
     
