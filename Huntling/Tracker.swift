@@ -18,6 +18,7 @@ protocol TrackerDelegate {
 }
 */
 
+
 class Tracker {
     
     var id: String = UUID().uuidString
@@ -39,3 +40,20 @@ class Tracker {
     }
     
 }
+
+
+
+/*
+struct Tracker: Codable {
+    
+    var id: String = UUID().uuidString
+    let name: String
+    let city: String
+    let plz: String
+    let phoneNumber: String
+    let location: CLLocation
+    
+    var distance: String?
+    
+}
+*/

@@ -1,0 +1,62 @@
+[
+    {
+        "id": "1",
+        "name": "Gustav Löhne",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    },
+        
+    {
+        "id": "2",
+        "name": "Anton Strauch",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    },
+    
+    {
+        "id": "3",
+        "name": "Grav Mag",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    },
+        
+    {
+        "id": "4",
+        "name": "Sina Cak",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    },
+    
+    {
+        "id": "5",
+        "name": "Soba Luk",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    },
+    
+    {
+        "id": "6",
+        "name": "Jerry Tub",
+        "city": "San Francisco",
+        "plz": "12345",
+        "phoneNumber": "1",
+        "latitude": 50.774720,
+        "longitude": 6.083920
+    }
+
+]

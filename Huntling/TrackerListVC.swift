@@ -224,8 +224,29 @@ class TrackerListVC : UIViewController {
     func getUpToDateTrackers() {
         
         // ...
+        let data = DataLoader().trackerData
         
-        allTrackers = currentTrackers
+        // print(data)
+        
+        //
+        var trks: [Tracker] = []
+        
+        
+        for d in data {
+            
+            let loc = CLLocation.init(latitude: d.latitude, longitude: d.longitude)
+            
+            let trk = Tracker.init(name: d.name, city: d.city, plz: d.plz, phoneNumber: d.phoneNumber, location: loc)
+            
+            trks.append(trk)
+            
+        }
+        
+        allTrackers = trks.sorted { $0.city < $1.city }
+        //
+        
+        //allTrackers = currentTrackers.sorted { $0.city < $1.city }
+        
     }
     
     
