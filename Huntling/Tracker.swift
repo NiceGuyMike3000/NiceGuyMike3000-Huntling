@@ -23,7 +23,8 @@ class Tracker {
     
     var id: String = UUID().uuidString
     let name: String
-    let city: String
+    //let city: String
+    let district: String
     let plz: String
     let phoneNumber: String
     let location: CLLocation
@@ -31,9 +32,9 @@ class Tracker {
     var distance: String?
     
     
-    init(name: String, city: String, plz: String, phoneNumber: String, location: CLLocation) {
+    init(name: String, district: String, plz: String, phoneNumber: String, location: CLLocation) {
         self.name = name
-        self.city = city
+        self.district = district
         self.plz = plz
         self.phoneNumber = phoneNumber
         self.location = location

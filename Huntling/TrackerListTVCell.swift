@@ -30,7 +30,7 @@ class TrackerListTVCell: UITableViewCell {
         return label
     }()
     
-    let cityLabel: UILabel = {
+    let districtLabel: UILabel = {
         let label = UILabel.init()
         label.numberOfLines = 1
         label.textAlignment = .left
@@ -70,10 +70,10 @@ class TrackerListTVCell: UITableViewCell {
         nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
         nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
         
-        contentView.addSubview(cityLabel)
-        cityLabel.translatesAutoresizingMaskIntoConstraints = false
-        cityLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        cityLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13).isActive = true
+        contentView.addSubview(districtLabel)
+        districtLabel.translatesAutoresizingMaskIntoConstraints = false
+        districtLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
+        districtLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13).isActive = true
         
         contentView.addSubview(callButton)
         callButton.translatesAutoresizingMaskIntoConstraints = false

@@ -12,7 +12,8 @@ struct TrackerData: Codable {
     
     var id: String
     var name: String
-    var city: String
+    //var city: String
+    var district: String
     var plz: String
     var phoneNumber: String
     var latitude: Double

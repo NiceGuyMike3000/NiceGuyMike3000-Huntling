@@ -13,20 +13,26 @@ import CoreLocation
 class TrackerListVC : UIViewController {
     
     
-    // Add JSON File
-    // 3. Scrape trackers -> Ask Phil
-    // 5. Add Trackers
+    /*
     
-    // Add Icons
+    2. Add Trackers
     
-    // Publish
+    3. Add Icons
     
-    // Go to school
+    Publish
     
-    // *: Improve GeoFilter Algo
-    // *. Improve PLZ Search Algo
-    // ->. Implement CoreData
-    // ->. Implement Firebase to update
+    Go to school
+    
+    *. Turn Button Box black in night mode
+    
+    *: Improve GeoFilter Algo
+     
+    *. Improve PLZ Search Algo
+     
+    ->. Implement CoreData
+    ->. Implement Firebase to update
+    
+    */
     
     var trackersTV: UITableView!
 
@@ -81,11 +87,13 @@ class TrackerListVC : UIViewController {
 
             if geoFilterActive == true {
                 
-                let cityMatches = geoedTrackers.filter({( tracker : Tracker) -> Bool in
+                let districtMatches = geoedTrackers.filter({( tracker : Tracker) -> Bool in
                 
-                    let city = tracker.city
+                    //let city = tracker.city
+                    
+                    let district = tracker.district
                 
-                    return city.lowercased().contains(searchText.lowercased())
+                    return district.lowercased().contains(searchText.lowercased())
                     
                 })
                 
@@ -99,7 +107,7 @@ class TrackerListVC : UIViewController {
                 
                 var mesh: [Tracker] = []
                 
-                for tra in cityMatches {
+                for tra in districtMatches {
                     mesh.append(tra)
                 }
                 
@@ -125,11 +133,11 @@ class TrackerListVC : UIViewController {
                 
             } else {
                 
-                let cityMatches = allTrackers.filter({( tracker : Tracker) -> Bool in
+                let districtMatches = allTrackers.filter({( tracker : Tracker) -> Bool in
                 
-                    let city = tracker.city
+                    let district = tracker.district
                 
-                    return city.lowercased().contains(searchText.lowercased())
+                    return district.lowercased().contains(searchText.lowercased())
                     
                 })
                 
@@ -143,7 +151,7 @@ class TrackerListVC : UIViewController {
                 
                 var mesh: [Tracker] = []
                 
-                for tra in cityMatches {
+                for tra in districtMatches {
                     mesh.append(tra)
                 }
                 
@@ -223,12 +231,8 @@ class TrackerListVC : UIViewController {
     
     func getUpToDateTrackers() {
         
-        // ...
         let data = DataLoader().trackerData
         
-        // print(data)
-        
-        //
         var trks: [Tracker] = []
         
         
@@ -236,16 +240,13 @@ class TrackerListVC : UIViewController {
             
             let loc = CLLocation.init(latitude: d.latitude, longitude: d.longitude)
             
-            let trk = Tracker.init(name: d.name, city: d.city, plz: d.plz, phoneNumber: d.phoneNumber, location: loc)
+            let trk = Tracker.init(name: d.name, district: d.district, plz: d.plz, phoneNumber: d.phoneNumber, location: loc)
             
             trks.append(trk)
             
         }
         
-        allTrackers = trks.sorted { $0.city < $1.city }
-        //
-        
-        //allTrackers = currentTrackers.sorted { $0.city < $1.city }
+        allTrackers = trks.sorted { $0.district < $1.district }
         
     }
     
@@ -369,8 +370,6 @@ class TrackerListVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //getTrackers()
         
         getUpToDateTrackers()
         
@@ -621,7 +620,7 @@ extension TrackerListVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TrackerListTVCell", for: indexPath) as! TrackerListTVCell
         
         cell.nameLabel.text = tracker.name
-        cell.cityLabel.text = tracker.plz + " " + tracker.city
+        cell.districtLabel.text = tracker.plz + " " + tracker.district
         
         if geoFilterActive == true {
             

@@ -2,7 +2,7 @@
     {
         "id": "1",
         "name": "Gustav Löhne",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
@@ -12,7 +12,7 @@
     {
         "id": "2",
         "name": "Anton Strauch",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
@@ -22,7 +22,7 @@
     {
         "id": "3",
         "name": "Grav Mag",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
@@ -32,7 +32,7 @@
     {
         "id": "4",
         "name": "Sina Cak",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
@@ -42,7 +42,7 @@
     {
         "id": "5",
         "name": "Soba Luk",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
@@ -52,7 +52,7 @@
     {
         "id": "6",
         "name": "Jerry Tub",
-        "city": "San Francisco",
+        "district": "San Francisco",
         "plz": "12345",
         "phoneNumber": "1",
         "latitude": 50.774720,
