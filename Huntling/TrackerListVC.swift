@@ -17,8 +17,6 @@ class TrackerListVC : UIViewController {
     
     2. Add Trackers
     
-    3. Add Icons
-    
     Publish
     
     Go to school
