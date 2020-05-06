@@ -65,16 +65,6 @@ class TrackerListTVCell: UITableViewCell {
     
     func setup() {
         
-        contentView.addSubview(nameLabel)
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
-        
-        contentView.addSubview(districtLabel)
-        districtLabel.translatesAutoresizingMaskIntoConstraints = false
-        districtLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
-        districtLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13).isActive = true
-        
         contentView.addSubview(callButton)
         callButton.translatesAutoresizingMaskIntoConstraints = false
         callButton.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -20).isActive = true
@@ -82,6 +72,22 @@ class TrackerListTVCell: UITableViewCell {
         callButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
         callButton.widthAnchor.constraint(equalToConstant: 30).isActive = true
         callButton.addTarget(self, action: #selector(handleCallButton), for: .touchUpInside)
+        
+        
+        contentView.addSubview(nameLabel)
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: callButton.leftAnchor, constant: -20).isActive = true
+        
+        
+        contentView.addSubview(districtLabel)
+        districtLabel.translatesAutoresizingMaskIntoConstraints = false
+        districtLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 20).isActive = true
+        districtLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 13).isActive = true
+        
+        districtLabel.rightAnchor.constraint(equalTo: callButton.leftAnchor, constant: -20).isActive = true
+        
         
         contentView.addSubview(proximityLabel)
         proximityLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -455,7 +455,9 @@ extension TrackerListVC: CLLocationManagerDelegate {
             
             var wasInserted = false
             
+            // Correct this
             let trkDist = allTrackers[i].location.distance(from: loc)
+            // Correct this
             
             let doubleDist = Double(trkDist)
             
