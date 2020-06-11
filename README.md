@@ -1,7 +1,6 @@
-# NiceGuyMike3000-Huntling
+# Huntling - iOS
 
-This is an app for Hunters.
-So far Germany only.
+This app allows hunters to find and contact trackers, in case they accidentally wound an animal instead of bringing it down immediately. If a user is hunting in an area without internet coverage this is the only solution that works, since the data is stored inside of the app and filtered either manually (postal code or area name) or by using the geolocation capabilities of the smartphone.
 
 **Privacy Policy**
 
